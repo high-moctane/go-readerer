@@ -16,5 +16,7 @@ func FromReaderAt(ra io.ReaderAt, offset int64) *ReaderFromReaderAt {
 
 // Read is the implementation of io.Reader.
 func (r *ReaderFromReaderAt) Read(p []byte) (n int, err error) {
-	return r.r.ReadAt(p, r.offset)
+	n, err = r.r.ReadAt(p, r.offset)
+	r.offset += int64(n)
+	return
 }
